@@ -41,7 +41,7 @@ class XiaomiHumidifier2NoWaterSensor(CoordinatorEntity, BinarySensorEntity):
 
     @property
     def device_info(self):
-        entry = self._coordinator.config_entry
+        entry = self.coordinator.config_entry
         return {
             "identifiers": {(DOMAIN, entry.unique_id or entry.entry_id)},
         }
