@@ -10,7 +10,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from .coordinator import XiaomiHumidifier2Coordinator
 from .device import CannotConnectError, validate_input
 
-PLATFORMS: list[Platform] = [Platform.HUMIDIFIER]
+PLATFORMS: list[Platform] = [Platform.HUMIDIFIER, Platform.BINARY_SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
