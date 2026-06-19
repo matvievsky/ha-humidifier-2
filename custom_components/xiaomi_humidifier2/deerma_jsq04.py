@@ -34,6 +34,12 @@ class OperationMode(enum.Enum):
     Humidity = 3
 
 
+class DeviceFault(enum.Enum):
+    NoFault = 0
+    InsufficientWater = 1
+    WaterSeparation = 2
+
+
 class DeermaJsq04Status(DeviceStatus):
     """Status for deerma.humidifier.jsq04."""
 
@@ -47,6 +53,18 @@ class DeermaJsq04Status(DeviceStatus):
     @property
     def power(self) -> str:
         return "on" if self.is_on else "off"
+
+    @property
+    def fault(self) -> DeviceFault:
+        try:
+            return DeviceFault(self.data.get("fault", 0))
+        except ValueError:
+            return DeviceFault.NoFault
+
+    @property
+    def no_water(self) -> bool:
+        """Return True when water is insufficient."""
+        return self.fault == DeviceFault.InsufficientWater
 
     @property
     def mode(self) -> OperationMode:
@@ -81,7 +99,8 @@ class DeermaJsq04Status(DeviceStatus):
         return self.data.get("water_shortage_fault")
 
     @property
-    def tank_filed(self) -> Optional[bool]:
+    def water_tank_detached(self) -> Optional[bool]:
+        """Return True when the tank is removed or empty."""
         return self.data.get("tank_filed")
 
 

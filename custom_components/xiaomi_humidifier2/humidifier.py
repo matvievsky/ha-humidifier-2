@@ -134,6 +134,8 @@ class XiaomiHumidifier2Entity(CoordinatorEntity, HumidifierEntity):
             ATTR_TEMPERATURE: getattr(data, "temperature", None),
             "water_level": getattr(data, "water_level", None),
             "water_tank_detached": getattr(data, "water_tank_detached", None),
+            "no_water": getattr(data, "no_water", None),
+            "fault": getattr(data, "fault", None),
             "child_lock": getattr(data, "child_lock", None),
             "buzzer": getattr(data, "buzzer", None),
             "dry_mode": getattr(data, "dry", None),
