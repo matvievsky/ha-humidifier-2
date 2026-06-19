@@ -1,0 +1,37 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add Xiaomi Humidifier 2",
+        "description": "Connect directly to the device over the local network using its IP address and token.",
+        "data": {
+          "host": "IP address",
+          "token": "Token",
+          "model": "Model",
+          "name": "Name"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the device.",
+      "unsupported_model": "The detected model is not supported by this integration.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "selector": {
+    "model": {
+      "options": {
+        "auto": "Auto detect",
+        "zhimi.humidifier.v1": "Xiaomi Mi Air Humidifier",
+        "zhimi.humidifier.ca1": "Smartmi Evaporative Humidifier",
+        "zhimi.humidifier.cb1": "Smartmi Humidifier 2",
+        "zhimi.humidifier.cb2": "Smartmi Humidifier 2 Lite",
+        "zhimi.humidifier.ca4": "Smartmi Evaporative Humidifier 2",
+        "deerma.humidifier.jsq04": "Mi Smart Humidifier 2 (MJJSQ04DY)"
+      }
+    }
+  }
+}
