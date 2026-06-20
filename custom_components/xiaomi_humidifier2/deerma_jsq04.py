@@ -11,7 +11,7 @@ _MIOT_MAPPING: dict[str, dict] = {
     # Humidifier (siid=2)
     "power": {"siid": 2, "piid": 1},
     "fault": {"siid": 2, "piid": 2},
-    "mode": {"siid": 2, "piid": 5},       # 1=Low, 2=Mid, 3=Humidity
+    "mode": {"siid": 2, "piid": 5},       # 1=Low, 2=Mid, 3=High, 4=Humidity
     "target_humidity": {"siid": 2, "piid": 6},  # [40, 80] step 1
     # Environment (siid=3)
     "relative_humidity": {"siid": 3, "piid": 1},
@@ -31,7 +31,8 @@ MODEL_JSQ04 = "deerma.humidifier.jsq04"
 class OperationMode(enum.Enum):
     Low = 1
     Mid = 2
-    Humidity = 3
+    High = 3
+    Humidity = 4
 
 
 class DeviceFault(enum.Enum):
@@ -130,3 +131,9 @@ class DeermaHumidifierJsq04(MiotDevice):
 
     def set_mode(self, mode: OperationMode) -> None:
         return self.set_property("mode", mode.value)
+
+    def set_led_light(self, on: bool) -> None:
+        return self.set_property("led_light", on)
+
+    def set_buzzer(self, on: bool) -> None:
+        return self.set_property("buzzer", on)

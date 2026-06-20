@@ -21,7 +21,10 @@ LEGACY_MODELS: Final[tuple[str, ...]] = (
 
 MIOT_MODELS: Final[tuple[str, ...]] = ("zhimi.humidifier.ca4",)
 
-DEERMA_MODELS: Final[tuple[str, ...]] = ("deerma.humidifier.jsq04",)
+DEERMA_MODELS: Final[tuple[str, ...]] = (
+    "deerma.humidifier.jsq04",
+    "deerma.humidifier.jsq2g",
+)
 
 SUPPORTED_MODELS: Final[tuple[str, ...]] = (*LEGACY_MODELS, *MIOT_MODELS, *DEERMA_MODELS)
 
@@ -33,6 +36,7 @@ MODE_LABELS: Final[dict[str, str]] = {
     "zhimi.humidifier.cb2": "Smartmi Humidifier 2 Lite (zhimi.humidifier.cb2)",
     "zhimi.humidifier.ca4": "Smartmi Evaporative Humidifier 2 (zhimi.humidifier.ca4)",
     "deerma.humidifier.jsq04": "Mi Smart Humidifier 2 (deerma.humidifier.jsq04)",
+    "deerma.humidifier.jsq2g": "Mi Smart Humidifier 2 (deerma.humidifier.jsq2g)",
 }
 
 

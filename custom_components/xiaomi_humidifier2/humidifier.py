@@ -57,7 +57,7 @@ class XiaomiHumidifier2Entity(CoordinatorEntity, HumidifierEntity):
         """Return the available operating modes."""
 
         if is_deerma_model(self._model):
-            return ["low", "mid", "humidity"]
+            return ["low", "mid", "high", "humidity"]
 
         if is_miot_model(self._model):
             return ["auto", "low", "mid", "high"]
