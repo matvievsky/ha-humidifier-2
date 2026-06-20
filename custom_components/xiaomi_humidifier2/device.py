@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from typing import Any
 
@@ -21,6 +22,8 @@ from .const import (
     is_miot_model,
 )
 from .deerma_jsq04 import DeermaHumidifierJsq04
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class CannotConnectError(Exception):
@@ -55,8 +58,29 @@ def instantiate_client(
     return AirHumidifier(host, token, model=model, timeout=DEFAULT_TIMEOUT)
 
 
+def resolve_model(host: str, token: str, selected_model: str) -> str:
+    """Return the resolved model string.
+
+    For auto-detect, fetches device info from the network. If offline, falls back
+    to the first supported deerma model so the entry can still load.
+    """
+
+    if selected_model != CONF_MODEL_AUTO:
+        return selected_model
+
+    try:
+        info = Device(host, token, timeout=DEFAULT_TIMEOUT).info()
+        if info.model in SUPPORTED_MODELS:
+            return info.model
+        _LOGGER.warning("Unsupported model %s, defaulting to jsq04 mapping", info.model)
+        return info.model
+    except DeviceException:
+        _LOGGER.warning("Could not reach %s to detect model, will retry on next poll", host)
+        return "deerma.humidifier.jsq04"
+
+
 def validate_input(data: dict[str, Any]) -> XiaomiHumidifier2RuntimeData:
-    """Validate the user input allows us to connect."""
+    """Validate the user input allows us to connect (used only during config flow)."""
 
     host = data[CONF_HOST]
     token = data[CONF_TOKEN]

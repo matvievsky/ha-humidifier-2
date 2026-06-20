@@ -159,12 +159,19 @@ class XiaomiHumidifier2Entity(CoordinatorEntity, HumidifierEntity):
         return {key: value for key, value in attributes.items() if value is not None}
 
     @property
+    def _current_info(self) -> Any:
+        """Return latest device info: coordinator cache if available, else initial."""
+        cached = getattr(self.coordinator, "device_info_cache", None)
+        return cached if cached is not None else self._info
+
+    @property
     def device_info(self) -> dict[str, Any]:
         """Return device information for Home Assistant."""
 
+        info = self._current_info
         connections = set()
-        if self._info.mac_address:
-            connections.add((CONNECTION_NETWORK_MAC, self._info.mac_address))
+        if info and info.mac_address:
+            connections.add((CONNECTION_NETWORK_MAC, info.mac_address))
 
         return {
             "identifiers": {(DOMAIN, self._entry.unique_id or self._entry.entry_id)},
@@ -172,8 +179,8 @@ class XiaomiHumidifier2Entity(CoordinatorEntity, HumidifierEntity):
             "manufacturer": "Xiaomi",
             "model": self._model,
             "name": self._entry.title,
-            "hw_version": self._info.hardware_version,
-            "sw_version": self._info.firmware_version,
+            "hw_version": info.hardware_version if info else None,
+            "sw_version": info.firmware_version if info else None,
         }
 
     async def async_turn_on(self, **kwargs: Any) -> None:
